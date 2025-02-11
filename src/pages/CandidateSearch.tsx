@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { searchGithubUser } from '../api/API';
 import Candidate from '../interfaces/Candidate.interface';
 
-export default function Profile(props: Candidate) {
+export default function CandidateSearch(props: Candidate) {
   // State to hold the fetched candidate data
   const [candidateData, setCandidateData] = useState<Candidate | null>(null);
 
@@ -10,7 +10,7 @@ export default function Profile(props: Candidate) {
   useEffect(() => {
     const fetchCandidateData = async () => {
       try {
-        const data = await searchGithubUser(props.name);
+        const data = await searchGithubUser(props.username);
         setCandidateData(data);
       } catch (error) {
         console.error("Error fetching GitHub data:", error);
@@ -18,11 +18,11 @@ export default function Profile(props: Candidate) {
     };
 
     fetchCandidateData();
-  }, [props.name]);
+  }, [props.username]);
 
   // Handle reject button click
   const handleReject = () => {
-    console.log(`${props.name} was rejected.`);
+    console.log(`${props.username} was rejected.`);
   };
 
   // Handle save button click
@@ -31,13 +31,13 @@ export default function Profile(props: Candidate) {
       const savedCandidates = JSON.parse(localStorage.getItem('savedCandidates') || '[]');
       savedCandidates.push(candidateData);
       localStorage.setItem('savedCandidates', JSON.stringify(savedCandidates));
-      console.log(`${candidateData.name} has been saved.`);
+      console.log(`${candidateData.username} has been saved.`);
     }
   };
 
   return (
     <div className="card">
-      <h2>{candidateData?.name}</h2>
+      <h2>{candidateData?.username}</h2>
       <p>{candidateData?.location}</p>
       <p>{candidateData?.email}</p>
       <p>{candidateData?.company}</p>
