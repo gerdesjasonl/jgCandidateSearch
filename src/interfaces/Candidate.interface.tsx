@@ -8,15 +8,15 @@ interface Candidate {
     bio?: string;
 }
 
-function Candidate({img, username, location, email, company, bio}: Candidate) {
+function Candidate(props: Candidate) {
     return (
         <div className="candidate">
-            <img src={img} alt={username} />
-            <h2>{username}</h2>
-            <p>{location}</p>
-            <p>{email}</p>
-            <p>{company}</p>
-            <p>{bio}</p>
+            <img src={props.img} alt={props.username} />
+            <h2>{props.username}</h2>
+            <p>{props.location}</p>
+            <p>{props.email}</p>
+            <p>{props.company}</p>
+            <p>{props.bio}</p>
         </div>
     )
 }

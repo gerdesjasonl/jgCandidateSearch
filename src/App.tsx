@@ -1,8 +1,9 @@
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Nav from './components/Nav';
 import './index.css';
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
       <Nav />

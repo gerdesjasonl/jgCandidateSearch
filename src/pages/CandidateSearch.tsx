@@ -1,40 +1,46 @@
 import { useState, useEffect } from 'react';
-import { searchGithubUser } from '../api/API';
+import { searchGithub } from '../api/API';
 import Candidate from '../interfaces/Candidate.interface';
 
-export default function CandidateSearch(props: Candidate) {
+const CandidateSearch: React.FC = () => {
   // State to hold the fetched candidate data
   const [candidateData, setCandidateData] = useState<Candidate | null>(null);
 
-  // Fetch the user data when the component mounts
+  // Fetch the user data when the component comes up
   useEffect(() => {
     const fetchCandidateData = async () => {
       try {
-        const data = await searchGithubUser(props.username);
-        setCandidateData(data);
+        const response = await searchGithub();
+        console.log("API Response:", response);
+
+        const data: Candidate[] = Array.isArray(response) ? response : [response];
+        const randomCandidate = data[Math.floor(Math.random() * data.length)];
+        setCandidateData(randomCandidate);
       } catch (error) {
         console.error("Error fetching GitHub data:", error);
       }
     };
 
     fetchCandidateData();
-  }, [props.username]);
+  }, []);
 
   // Handle reject button click
   const handleReject = () => {
-    console.log(`${props.username} was rejected.`);
+    console.log(`${candidateData?.username ?? "Unknown"} was rejected.`);
   };
 
   // Handle save button click
   const handleSave = () => {
-    if (candidateData) {
+    try {
       const savedCandidates = JSON.parse(localStorage.getItem('savedCandidates') || '[]');
       savedCandidates.push(candidateData);
       localStorage.setItem('savedCandidates', JSON.stringify(savedCandidates));
-      console.log(`${candidateData.username} has been saved.`);
+      console.log(`${candidateData?.username} has been saved.`);
+    } catch (error) {
+      console.error("Error saving candidate", error)
     }
   };
-
+// This is the card that should show up in the UI
   return (
     <div className="card">
       <h2>{candidateData?.username}</h2>
@@ -53,3 +59,5 @@ export default function CandidateSearch(props: Candidate) {
     </div>
   );
 }
+
+export default CandidateSearch;
