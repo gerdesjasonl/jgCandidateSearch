@@ -2,43 +2,47 @@ import { useState, useEffect } from 'react';
 import { searchGithub } from '../api/API';
 import Candidate from '../interfaces/Candidate.interface';
 
-const CandidateSearch: React.FC = () => {
+const CandidateSearch: React.FC<Candidate> = () => {
   // State to hold the fetched candidate data
   const [candidateData, setCandidateData] = useState<Candidate | null>(null);
 
   // Fetch the user data when the component comes up
+  const fetchCandidateData = async () => {
+    try {
+      const response = await searchGithub();
+      console.log("API Response:", response);
+
+      const data: Candidate[] = Array.isArray(response) ? response : [response];
+      const randomCandidate = data[Math.floor(Math.random() * data.length)];
+      setCandidateData(randomCandidate);
+    } catch (error) {
+      console.error("Error fetching GitHub data:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchCandidateData = async () => {
-      try {
-        const response = await searchGithub();
-        console.log("API Response:", response);
-
-        const data: Candidate[] = Array.isArray(response) ? response : [response];
-        const randomCandidate = data[Math.floor(Math.random() * data.length)];
-        setCandidateData(randomCandidate);
-      } catch (error) {
-        console.error("Error fetching GitHub data:", error);
-      }
-    };
-
     fetchCandidateData();
   }, []);
 
   // Handle reject button click
   const handleReject = () => {
-    console.log(`${candidateData?.username ?? "Unknown"} was rejected.`);
+    console.log(`${candidateData?.login ?? "Unknown"} was rejected.`);
+    // Fetch a new candidate after rejection
+    fetchCandidateData();
   };
 
   // Handle save button click
   const handleSave = () => {
-    try {
-      const savedCandidates = JSON.parse(localStorage.getItem('savedCandidates') || '[]');
-      savedCandidates.push(candidateData);
-      localStorage.setItem('savedCandidates', JSON.stringify(savedCandidates));
-      console.log(`${candidateData?.username} has been saved.`);
-    } catch (error) {
-      console.error("Error saving candidate", error)
+    let parsedCandidates: Candidate[] = [];
+    const storedCandidates = localStorage.getItem('candidates');
+    if (typeof storedCandidates === 'string') {
+      parsedCandidates = JSON.parse(storedCandidates);
     }
+    if (candidateData) {
+      parsedCandidates.push(candidateData);
+    }
+    localStorage.setItem('candidates', JSON.stringify(parsedCandidates));
+    fetchCandidateData();
   };
 // This is the card that should show up in the UI
   return (

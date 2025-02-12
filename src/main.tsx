@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <CandidateSearch username={''} email={''} />,
+        element: <CandidateSearch login={''} email={''} />,
       },
       {
         path: '/SavedCandidates',
