@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { searchGithub } from '../api/API';
 import Candidate from '../interfaces/Candidate.interface';
 
+
 const CandidateSearch: React.FC<Candidate> = () => {
   // State to hold the fetched candidate data
   const [candidateData, setCandidateData] = useState<Candidate | null>(null);
@@ -33,8 +34,9 @@ const CandidateSearch: React.FC<Candidate> = () => {
 
   // Handle save button click
   const handleSave = () => {
-    let parsedCandidates: Candidate[] = [];
     const storedCandidates = localStorage.getItem('candidates');
+    let parsedCandidates: Candidate[] = storedCandidates ? JSON.parse(storedCandidates) : [];
+    
     if (typeof storedCandidates === 'string') {
       parsedCandidates = JSON.parse(storedCandidates);
     }
@@ -47,8 +49,8 @@ const CandidateSearch: React.FC<Candidate> = () => {
 // This is the card that should show up in the UI
   return (
     <div className="card">
-      <img src={candidateData?.avatar_url}></img>
-      <h2>{candidateData?.login}</h2>
+      <img src={candidateData?.avatar_url ?? "default-avatar.png"} alt="Avatar"/>
+      <h2>{candidateData?.login ?? "Unknown User"}</h2>
       <p>{candidateData?.location}</p>
       <p>{candidateData?.email}</p>
       <p>{candidateData?.company}</p>
@@ -56,10 +58,14 @@ const CandidateSearch: React.FC<Candidate> = () => {
 
       <div className="actions">
         {/* Reject Button */}
-        <button onClick={handleReject} className="reject-btn">Reject</button>
+        <button onClick={handleReject} className="reject-btn" style={{ borderRadius: '50%', backgroundColor: 'white', border: '1px solid red', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span style={{ color: 'red' }}>−</span>
+        </button>
 
         {/* Save Button */}
-        <button onClick={handleSave} className="save-btn">Save</button>
+        <button onClick={handleSave} className="save-btn" style={{ borderRadius: '50%', backgroundColor: 'white', border: '1px solid green', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span style={{ color: 'green' }}>+</span>
+        </button>
       </div>
     </div>
   );

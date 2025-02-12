@@ -17,21 +17,22 @@ const CandidatesList = ({
     removeFromList 
 }: CandidatesListProps) => {
     console.log(candidates);
-
+// This component is a list of candidates organized in rows that can be removed.
   return (
     <>
-      <ul>
+      <ul style={{ listStyleType: 'none', padding: 0 }}>
         {candidates.map((candidate) => (
-          <li key={candidate.login}>
-            <img src={candidate.avatar_url} alt={candidate.login} />
-            <h3>{candidate.login}</h3>
-            <button
-              onClick={(e) =>
-                removeFromList && removeFromList(e, true, candidate.login)
-              }
-            >
-              Remove
-            </button>
+          <li key={candidate.login} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+        <img src={candidate.avatar_url} alt={candidate.login} style={{ borderRadius: '50%', marginRight: '10px' }} />
+        <h3 style={{ margin: '0 10px 0 0' }}>{candidate.login}</h3>
+        <button
+          onClick={(e) =>
+            removeFromList && removeFromList(e, true, candidate.login)
+          }
+          style={{ marginLeft: 'auto' }}
+        >
+          Remove
+        </button>
           </li>
         ))}
       </ul>
