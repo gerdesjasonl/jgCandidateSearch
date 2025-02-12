@@ -43,7 +43,8 @@ const CandidateSearch: React.FC = () => {
 // This is the card that should show up in the UI
   return (
     <div className="card">
-      <h2>{candidateData?.username}</h2>
+      <img src={candidateData?.avatar_url}></img>
+      <h2>{candidateData?.login}</h2>
       <p>{candidateData?.location}</p>
       <p>{candidateData?.email}</p>
       <p>{candidateData?.company}</p>
