@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { searchGithub } from '../api/API';
+import { searchGithub , searchGithubUser} from '../api/API';
 import Candidate from '../interfaces/Candidate.interface';
 
 
@@ -15,7 +15,8 @@ const CandidateSearch: React.FC<Candidate> = () => {
 
       const data: Candidate[] = Array.isArray(response) ? response : [response];
       const randomCandidate = data[Math.floor(Math.random() * data.length)];
-      setCandidateData(randomCandidate);
+      const candidateDetails = await searchGithubUser(randomCandidate.login);
+      setCandidateData(candidateDetails);
     } catch (error) {
       console.error("Error fetching GitHub data:", error);
     }
@@ -56,15 +57,15 @@ const CandidateSearch: React.FC<Candidate> = () => {
       <p>{candidateData?.company}</p>
       <p>{candidateData?.bio}</p>
 
-      <div className="actions">
+      <div className="actions" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
         {/* Reject Button */}
-        <button onClick={handleReject} className="reject-btn" style={{ borderRadius: '50%', backgroundColor: 'white', border: '1px solid red', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <span style={{ color: 'red' }}>−</span>
+        <button onClick={handleReject} className="reject-btn" style={{ borderRadius: '50%', backgroundColor: 'red', border: 'none', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span style={{ color: 'black', fontSize: '24px' }}>−</span>
         </button>
 
         {/* Save Button */}
-        <button onClick={handleSave} className="save-btn" style={{ borderRadius: '50%', backgroundColor: 'white', border: '1px solid green', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <span style={{ color: 'green' }}>+</span>
+        <button onClick={handleSave} className="save-btn" style={{ borderRadius: '50%', backgroundColor: 'green', border: 'none', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span style={{ color: 'black', fontSize: '24px' }}>+</span>
         </button>
       </div>
     </div>

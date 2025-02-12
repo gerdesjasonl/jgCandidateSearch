@@ -77,6 +77,8 @@ button:focus-visible {
 
 main {
   color: #fff;
+  justify-content: center;
+  text-align: center;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -98,6 +100,12 @@ tbody tr:nth-child(odd) {
   display: flex;
   justify-content: flex-start;
   padding: 1em 2em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: inherit; /* Ensure the background matches the body */
+  z-index: 1000; /* Ensure it stays on top of other elements */
 }
 
 .nav-item {
