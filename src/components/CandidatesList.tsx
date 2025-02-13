@@ -20,6 +20,7 @@ const CandidatesList = ({
 // This component is a list of candidates organized in rows that can be removed.
   return (
     <>
+
       <ul style={{ listStyleType: 'none', padding: 0 }}>
         {candidates.map((candidate, index) => (
             <li
