@@ -36,6 +36,7 @@ const SavedCandidates = () => {
   return (
     <>
       <h1>Potential Candidates</h1>
+    
       {(!candidates?.length || candidates?.length === 0) ? (
         <h1 style={{ margin: '16px 0' }}>Add candidates to your list.</h1>
       ) : (
