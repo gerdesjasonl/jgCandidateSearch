@@ -55,33 +55,38 @@ const CandidateSearch: React.FC<Candidate> = () => {
     fetchCandidateData();
   };
 // This is the card that should show up in the UI
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 40px)', padding: '20px 0' }}>
+return (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 40px)', padding: '20px 0' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      {/* Candidate Card */}
       <div className="card" style={{ borderRadius: '15px', overflow: 'hidden', backgroundColor: '#333', color: '#fff', padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '300px', margin: '20px 0' }}>
-      <img src={candidateData?.avatar_url ?? "default-avatar.png"} alt="Avatar" style={{ borderRadius: '50%', marginBottom: '20px', width: '100px', height: '100px' }}/>
-      <div style={{ flex: 1, textAlign: 'left', width: '100%' }}>
-        <h2>Name: {candidateData?.name ?? "No Name Given"}</h2>
-        <h2>Login: {candidateData?.login ?? "Unknown User"}</h2>
-        <p>Location: {candidateData?.location ?? "No Location"}</p>
-        <p>Email: {candidateData?.email ?? "No Email"}</p>
-        <p>Company: {candidateData?.company ?? "No Company"}</p>
-        <p>HTML URL: {candidateData?.html_url ?? "No HTML URL"}</p>
-        <p>BIO: {candidateData?.bio ?? "No Bio"}</p>
+        <img src={candidateData?.avatar_url ?? "default-avatar.png"} alt="Avatar" style={{ borderRadius: '50%', marginBottom: '20px', width: '100px', height: '100px' }}/>
+        <div style={{ flex: 1, textAlign: 'left', width: '100%' }}>
+          <h2>Name: {candidateData?.name ?? "No Name Given"}</h2>
+          <h2>Login: {candidateData?.login ?? "Unknown User"}</h2>
+          <p>Location: {candidateData?.location ?? "No Location"}</p>
+          <p>Email: {candidateData?.email ?? "No Email"}</p>
+          <p>Company: {candidateData?.company ?? "No Company"}</p>
+          <p>HTML URL: {candidateData?.html_url ?? "No HTML URL"}</p>
+          <p>BIO: {candidateData?.bio ?? "No Bio"}</p>
+        </div>
       </div>
-      <div className="actions" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px', width: '100%' }}>
+
+      {/* Buttons */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '80px', marginTop: '20px' }}>
         {/* Reject Button */}
         <button onClick={handleReject} className="reject-btn" style={{ borderRadius: '50%', backgroundColor: 'red', border: 'none', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <span style={{ color: 'black', fontSize: '24px' }}>−</span>
+          <span style={{ color: 'black', fontSize: '24px' }}>−</span>
         </button>
 
         {/* Save Button */}
         <button onClick={handleSave} className="save-btn" style={{ borderRadius: '50%', backgroundColor: 'green', border: 'none', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <span style={{ color: 'black', fontSize: '24px' }}>+</span>
+          <span style={{ color: 'black', fontSize: '24px' }}>+</span>
         </button>
       </div>
-      </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default CandidateSearch;

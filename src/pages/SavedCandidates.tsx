@@ -11,18 +11,14 @@ const SavedCandidates = () => {
     title: string | null
   ) => {
     e.preventDefault();
-    if (currentlyOnList) {
-      let parsedCandidates: Candidate[] = [];
+    if (currentlyOnList && title) {
+      let parsedCandidates: Candidate[] = JSON.parse(localStorage.getItem('candidates') as string);
 
-      const storedCandidates = localStorage.getItem('candidates');
-      if (typeof storedCandidates === 'string') {
-        parsedCandidates = JSON.parse(storedCandidates);
-      }
       parsedCandidates = parsedCandidates.filter(
         (candidate) => candidate.login !== title
       );
-      setCandidates(parsedCandidates);
       localStorage.setItem('candidates', JSON.stringify(parsedCandidates));
+      setCandidates([...parsedCandidates]);
     }
   };
   

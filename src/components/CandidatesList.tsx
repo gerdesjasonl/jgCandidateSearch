@@ -50,7 +50,7 @@ const CandidatesList = ({
               <span style={{ flex: '1 1 100px', margin: '1px 5px'  }}>{candidate.bio || 'No bio available'}</span>  
                 <button
                 onClick={(e) =>
-                removeFromList && removeFromList(e, false, candidate.login)
+                removeFromList && removeFromList(e, true, candidate.login)
                 }
                 style={{
                 marginLeft: 'auto',
